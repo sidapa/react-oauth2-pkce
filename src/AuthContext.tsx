@@ -62,6 +62,11 @@ export const AuthProvider = ({ authConfig, children }: IAuthProvider) => {
     setLoginInProgress(false)
   }
 
+  function logIn() {
+    setLoginInProgress(true)
+    logIn(config)
+  }
+
   function handleTokenResponse(response: TTokenResponse) {
     setToken(response.access_token)
     setRefreshToken(response.refresh_token)
@@ -135,8 +140,7 @@ export const AuthProvider = ({ authConfig, children }: IAuthProvider) => {
       }
     } else if (!token) {
       // First page visit
-      setLoginInProgress(true)
-      logIn(config)
+      // noop
     } else {
       if (decodeToken) {
         try {
